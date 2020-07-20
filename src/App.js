@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 import Login from './components/auth/Login'
 import NuevaCuenta from './components/auth/NuevaCuenta'
-import Proyectos from './components/auth/Proyectos'
+import Proyectos from './components/auth/Proyectos/Proyectos'
 
 function App() {
   return (
