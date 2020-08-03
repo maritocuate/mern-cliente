@@ -1,19 +1,40 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 
 const NuevoProyecto = () => {
+
+    const [proyecto, setProyecto] = useState({
+        nombre:''
+    })
+
+    const {nombre} = proyecto
+
+    const handleChange = e => {
+        setProyecto({
+            ...proyecto,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault()
+
+    }
+
     return (
-        <frameElement>
+        <Fragment>
             <button
                 type='button'
                 className='btn btn-block btn-primario'
             >Nuevo Proyecto</button>
 
-            <form className='formulario-nuevo-proyecto'>
+            <form className='formulario-nuevo-proyecto' onSubmit={handleSubmit}>
                 <input
                     type='text'
                     className='input-text'
                     placeholder='Nombre Proyecto'
                     name='nombre'
+                    onChange={handleChange}
+                    value={nombre}
                 />
 
                 <input
@@ -22,7 +43,7 @@ const NuevoProyecto = () => {
                     value='Agregar Proyecto'
                 />
             </form>
-        </frameElement>
+        </Fragment>
     )
 }
  
