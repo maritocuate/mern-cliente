@@ -3,7 +3,13 @@ import {v4 as uuidv4} from 'uuid'
 
 import proyectoContext from './proyectoContext'
 import proyectoReducer from './proyectoReducer'
-import { FORMULARIO_PROYECTO, OBTENER_PROYECTOS, AGREGAR_PROYECTO, VALIDAR_FORMULARIO } from '../../types'
+import {
+        FORMULARIO_PROYECTO,
+        OBTENER_PROYECTOS,
+        AGREGAR_PROYECTO,
+        VALIDAR_FORMULARIO,
+        PROYECTO_ACTUAL,
+        ELIMINAR_PROYECTO } from '../../types'
 
 const ProyectoState = props => {
     const proyectos = [
@@ -15,7 +21,8 @@ const ProyectoState = props => {
     const initialState = {
         proyectos: [],
         formulario: false,
-        errorformulario: false
+        errorformulario: false,
+        proyecto: null
     }
 
     //dispatch para ejecutar las acciones
@@ -52,7 +59,22 @@ const ProyectoState = props => {
         dispatch({
             type: VALIDAR_FORMULARIO
         })
+    }
 
+    //Selecciona el proyecto clickeado
+    const proyectoActual = proyectoId => {
+        dispatch({
+            type: PROYECTO_ACTUAL,
+            payload: proyectoId
+        })
+    }
+
+    //Elimina proyecto
+    const eliminarProyecto = proyectoId => {
+        dispatch({
+            type: ELIMINAR_PROYECTO,
+            payload: proyectoId
+        })
     }
 
     return(
@@ -61,10 +83,13 @@ const ProyectoState = props => {
                 proyectos: state.proyectos,
                 formulario: state.formulario,
                 errorformulario: state.errorformulario,
+                proyecto: state.proyecto,
                 mostrarFormulario,
                 obtenerProyectos,
                 agregarProyecto,
-                mostrarError
+                mostrarError,
+                proyectoActual,
+                eliminarProyecto
             }}
         >
             {props.children}
