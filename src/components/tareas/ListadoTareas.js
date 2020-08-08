@@ -12,12 +12,7 @@ const ListadoTareas = () => {
     //Array destructuring
     const [proyectoActual] = proyecto
 
-    const tareasProyecto = [
-        {nombre: 'elegir plataforma', estado:true},
-        {nombre: 'elegir colores', estado:true},
-        {nombre: 'elegir pago', estado:false},
-        {nombre: 'elegir nivel', estado:false}
-    ]
+    const tareasProyecto = []
     
     return (
         <Fragment>
