@@ -1,6 +1,7 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import proyectoContext from '../../context/proyectos/proyectoContext'
 import tareaContext from '../../context/tareas/tareaContext'
+import {v4 as uuidv4} from 'uuid'
 
 const FormTarea = () => {
     //Tarea input
@@ -8,12 +9,19 @@ const FormTarea = () => {
         nombre: ''
     })
 
+    
     //Extraer proyecto activo
     const proyectosContext = useContext(proyectoContext)
     const {proyecto} = proyectosContext
     
     const tareasContext = useContext(tareaContext)
-    const {errorTarea, agregarTarea, validarTarea, obtenerTareas} = tareasContext
+    const {tareaactual, errorTarea, agregarTarea, validarTarea, obtenerTareas, editarTarea} = tareasContext
+    
+    useEffect(() => {
+        if(tareaactual!==null){
+            setTarea(tareaactual)
+        }
+    }, [tareaactual])
 
     if(!proyecto) return null
 
@@ -28,9 +36,15 @@ const FormTarea = () => {
             return
         }
 
-        tarea.estado = false
-        tarea.proyectoId = proyectoActual.id
-        agregarTarea(tarea)
+        //Check si agrega una tarea nueva o esta editando una
+        if(tareaactual===null){
+            tarea.id = uuidv4()
+            tarea.estado = false
+            tarea.proyectoId = proyectoActual.id
+            agregarTarea(tarea)
+        }else{
+            editarTarea(tarea)
+        }
 
         //Listo tareas
         obtenerTareas(proyectoActual.id)
@@ -63,7 +77,7 @@ const FormTarea = () => {
                     <input
                         type='submit'
                         className='btn btn-primario btn-submit btn-block'
-                        value='Agregar Tarea'
+                        value={tareaactual===null ? 'Agregar Tarea' : 'Editar Tarea'}
                     />
                 </div>
             </form>
